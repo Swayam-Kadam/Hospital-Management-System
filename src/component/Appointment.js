@@ -3,6 +3,7 @@ import Foter from "./Foter";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
+import { loadStripe } from "@stripe/stripe-js";
 
 
 const Appointment = () => {
@@ -45,10 +46,37 @@ const doctors =[
     address:''
   })
 
+  //payment function
+  const makePayment = async () => {
+    const stripe = await loadStripe("pk_test_51QzWpjFLeQgcJ2mRgnUt8Jkjz2JWP4eOByXPvvbgUmsO9zd7DsvnIcuuH1yDFxUOobSlhkXZfsawzNt6uvifDxcB00qu9YBSXU");
+  
+    try {
+      const response = await axios.post('http://localhost:3001/api/appointment/create-checkout-session', {
+        appointment: [formData] // Match backend format
+      });
+  
+      const session = response.data;
+      const result = await stripe.redirectToCheckout({
+        sessionId: session.id,
+      });
+      if (result.error) {
+        console.error(result.error.message);
+        toast.error("Payment failed, please try again.");
+      }
+    } catch (error) {
+      console.error("Error processing payment:", error);
+      toast.error("Payment could not be processed.");
+    }
+  };
+  
+
+//this function is use to set input data
   const handleChange =(e)=>{
     setFormData({...formData,[e.target.name]:e.target.value})
   }
 
+
+    //this function is use to make a appointment
   const handleSubmit = async (e) =>{
    
     e.preventDefault();
@@ -73,7 +101,7 @@ const doctors =[
       return;
     }
     
-
+  
     try {
       
       const response = await axios.post('http://localhost:3001/api/appointment/appo',formData,{
@@ -83,6 +111,7 @@ const doctors =[
         },
       })
 
+      await makePayment();
       console.log("appointment Created Successfull",response.data);
       toast.success('Appointment booked successfully!');
 
@@ -110,10 +139,10 @@ const doctors =[
     
     <div>
       <ToastContainer  position="top-center"  autoClose={3000}   hideProgressBar={false}  newestOnTop={true}  closeOnClick  pauseOnFocusLoss  draggable  pauseOnHover/>
-      <div className="container d-flex" style={{ height: '28rem' }}>
-        <div className="Details-doc" style={{ height: '100%', width: '50%', overflow: 'hidden' }}>
+      <div className="container d-flex my-3" style={{ height: '28rem' }}>
+        <div className="Details-doc" id='card'style={{ height: '100%', width: '50%', overflow: 'hidden' }}>
 
-          <p style={{ marginTop: '2rem', backgroundColor: '#f1faee', textAlign: 'left' }}>
+          <p style={{ marginTop: '2rem', textAlign: 'left' }}>
             <strong> Schedule Your Appointment | Apollo Medical Institute</strong><br />Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur tenetur, laboriosam natus id nobis nihil unde rerum at ipsa? Veritatis ad quasi rerum delectus atque natus! Ullam officia tenetur distinctio necessitatibus sit corporis rerum? Cumque eveniet quae itaque atque modi iste dolor? Eveniet laudantium sint cum ipsum pariatur! Delectus repudiandae iste soluta ipsum eius eligendi maxime hic totam quam? Pariatur veniam, consequuntur temporibus sunt animi unde, assumenda cumque omnis excepturi facilis impedit deserunt nemo doloremque iusto ipsum, minima dignissimos doloribus! Deserunt, ad quisquam ullam magnam veritatis deleniti similique, corrupti iure tempore sequi aperiam labore dolorum dolore debitis dolor dignissimos optio quam delectus officiis quia adipisci error. Suscipit harum molestias deleniti recusandae, sequi expedita ducimus, soluta corporis fugiat voluptatibus dolorum voluptates? Corrupti delectus accusamus, laborum quisquam mollitia temporibus impedit perferendis fugiat alias ipsum distinctio obcaecati fuga! Atque odio dicta esse? Repudiandae incidunt voluptas illo distinctio nulla dicta, sit perferendis voluptate! Quidem rerum atque molestiae minus? Possimus eligendi nostrum explicabo laudantium consequatur, est </p>
         </div>
         <div className='image' style={{ height: '100%', width: '50%', marginRight: '0' }}>
@@ -123,7 +152,7 @@ const doctors =[
 
       <div className="container" style={{ marginTop: '5rem' }}>
         <h2 style={{ color: '#457b9d', textAlign: 'left' }}>Appointment</h2>
-        <form style={{ backgroundColor: '#f1faee' }} onSubmit={handleSubmit}>
+        <form id='card'  onSubmit={handleSubmit}>
           <div className="container d-flex my-3">
             <div className="container ">
               <input type='text' className="form-control my-3" placeholder='Enter First name' name="f_name" value={formData.f_name} onChange={handleChange} id='f_name'/>

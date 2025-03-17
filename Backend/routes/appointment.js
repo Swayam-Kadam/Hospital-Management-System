@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router();
 const Appointment = require('../models/appointments');
 const fetchuser = require('../middleware/fetchuser');
+const stripe = require("stripe")("sk_test_51QzWpjFLeQgcJ2mRyWSXcE0vDm7j8WcHyXRvrwMHVjY6DB6BCLWvvwdsOcFvRM3GE8rTD2L1pTRtMhY4huC1sG1s00AdNM1tnq"); // Replace with your secret key
 
 
 //Route 1:- Fetch All Appointments using:- GET "api/appointment/appo".
@@ -69,4 +70,65 @@ router.patch("/update-status/:id", async (req, res) => {
       res.status(500).json({ error: "Failed to update status" });
     }
   });
+
+  // router.post("/create-checkout-session",async(req,res)=>{
+  //   const {appoinment} = req.body;
+
+  //   const lineItems = appoinment.map((appo)=>({
+  //     price_data:{
+  //       currency:"ruppey",
+  //       appointment_data:{
+  //         name:appo.f_name + " " + appo.l_name,
+  //         email:appo.email
+  //       },
+  //       unit_amount:"500"
+  //     },
+  //   }));
+  //   const session = await stripe.checkout.session.create({
+  //     payment_method_types:["card"],
+  //     line_items:lineItems,
+  //     mode:"payment",
+  //     success_url:"http://localhost:3000/Appointment",
+  //     cancel_url:"http://localhost:3000/"
+  //   })
+  //   res.json({id:session.id})
+  // })
+
+
+router.post("/create-checkout-session", async (req, res) => {
+    try {
+        const { appointment } = req.body;
+
+        const lineItems = appointment.map((appo) => ({
+            price_data: {
+                currency: "inr", // Correct currency code for Indian Rupees
+                product_data: {  // Use product_data instead of appointment_data
+                    name: `${appo.f_name} ${appo.l_name}`,
+                    description: `Appointment for ${appo.email}`, // Additional info
+                },
+                unit_amount: 50000, // Correct format (50000 = ₹500.00)
+            },
+            quantity: 1, // Required field
+        }));
+
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ["card"],
+            line_items: lineItems,
+            mode: "payment",
+            success_url: "http://localhost:3000/success",
+            cancel_url: "http://localhost:3000/unsuccess",
+            metadata: {
+                user_email: appointment[0].email, // Store extra info in metadata
+            },
+        });
+
+        res.json({ id: session.id });
+    } catch (error) {
+        console.error("Error creating checkout session:", error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
 module.exports = router
+

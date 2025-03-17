@@ -2,8 +2,7 @@ const mongoose = require('mongoose');
 const mongoURI = "mongodb://localhost:27017/hospital"
 
 const connectToMongo = () =>{
-    mongoose.connect(mongoURI,{
-    });
+    mongoose.connect(mongoURI,{});
     console.log("Connection Successful");
 };
 

@@ -1,5 +1,10 @@
-import React,{useState} from 'react'
 import Foter from './Foter'
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import './css/homee.css';
+import { EffectCoverflow,Pagination } from 'swiper/modules';
+import HomeImage from './HomeImage';
 
 const department =[
   {
@@ -38,26 +43,27 @@ const department =[
 
 const Home = () => {
 
-    const [startIndex, setStartIndex] = useState(0); // Track the first visible card
+    // const [startIndex, setStartIndex] = useState(0); // Track the first visible card
   
-    const handleScrollRight = () => {
-      if (startIndex + 4 < department.length) {
-        setStartIndex((prevIndex) => prevIndex + 1); // Move forward by one card
-      }
-    };
+    // const handleScrollRight = () => {
+    //   if (startIndex + 4 < department.length) {
+    //     setStartIndex((prevIndex) => prevIndex + 1); // Move forward by one card
+    //   }
+    // };
   
-    const handleScrollLeft = () => {
-      if (startIndex > 0) {
-        setStartIndex((prevIndex) => prevIndex - 1); // Move backward by one card
-      }
-    };
+    // const handleScrollLeft = () => {
+    //   if (startIndex > 0) {
+    //     setStartIndex((prevIndex) => prevIndex - 1); // Move backward by one card
+    //   }
+    // };
 
   return (
     <div>
-      <div className="container d-flex" style={{ height: '28rem' }}>
-        <div className="Details-doc" style={{ height: '100%', width: '50%', overflow: 'hidden' }}>
+      <HomeImage/>
+      <div className="container d-flex my-3" style={{ height: '28rem' }}>
+        <div className="Details-doc" id='card' style={{ height: '100%', width: '50%', overflow: 'hidden' }}>
 
-          <p style={{ marginTop: '2rem', backgroundColor: '#f1faee', textAlign: 'left' }}>
+          <p style={{ marginTop: '2rem', textAlign: 'left' }}>
             <strong>Welcome to Apollo Medical Institute | Your Trusted Healthcare Provider!!</strong><br />Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur tenetur, laboriosam natus id nobis nihil unde rerum at ipsa? Veritatis ad quasi rerum delectus atque natus! Ullam officia tenetur distinctio necessitatibus sit corporis rerum? Cumque eveniet quae itaque atque modi iste dolor? Eveniet laudantium sint cum ipsum pariatur! Delectus repudiandae iste soluta ipsum eius eligendi maxime hic totam quam? Pariatur veniam, consequuntur temporibus sunt animi unde, assumenda cumque omnis excepturi facilis impedit deserunt nemo doloremque iusto ipsum, minima dignissimos doloribus! Deserunt, ad quisquam ullam magnam veritatis deleniti similique, corrupti iure tempore sequi aperiam labore dolorum dolore debitis dolor dignissimos optio quam delectus officiis quia adipisci error. Suscipit harum molestias deleniti recusandae, sequi expedita ducimus, soluta corporis fugiat voluptatibus dolorum voluptates? Corrupti delectus accusamus, laborum quisquam mollitia temporibus impedit perferendis fugiat alias ipsum distinctio obcaecati fuga! Atque odio dicta esse? Repudiandae incidunt voluptas illo distinctio nulla dicta, sit perferendis voluptate! Quidem rerum atque molestiae minus? Possimus eligendi nostrum explicabo laudantium consequatur, est </p>
         </div>
         <div className='image' style={{ height: '100%', width: '50%', marginRight: '0' }}>
@@ -71,9 +77,9 @@ const Home = () => {
           <img src="/doc2.png" alt="im" style={{ height: '100%', width: '100%' }} />
         </div>
 
-        <div className="Details-doc1" style={{ height: '100%', width: '50%', alignContent: 'center', overflow: 'hidden' }}>
+        <div className="Details-doc1" id='card' style={{ height: '100%', width: '50%', alignContent: 'center', overflow: 'hidden' }}>
 
-          <p style={{ marginTop: '2rem', backgroundColor: '#f1faee', textAlign: 'left' }}>
+          <p style={{ marginTop: '2rem', textAlign: 'left' }}>
             Biography <br /><br />
             <strong>Who We Are?</strong> <br />Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur tenetur, laboriosam natus id nobis nihil unde rerum at ipsa? Veritatis ad quasi rerum delectus atque natus! Ullam officia tenetur distinctio necessitatibus sit corporis rerum? Cumque eveniet quae itaque atque modi iste dolor? Eveniet laudantium sint cum ipsum pariatur! Delectus repudiandae iste soluta ipsum eius eligendi maxime hic totam quam? Pariatur veniam, consequuntur temporibus sunt animi unde, assumenda cumque omnis excepturi facilis impedit deserunt nemo doloremque iusto ipsum, minima dignissimos doloribus! Deserunt, ad quisquam ullam magnam veritatis deleniti <br /><br />We Are Working On MERN Stack Project!!<br /><br /> tempore sequi aperiam labore dolorum dolore debitis dolor dignissimos optio quam delectus officiis quia adipisci error. Suscipit harum molestias deleniti recusandae, sequi expedita ducimus, soluta corporis fugiat voluptatibus dolorum voluptates? Corrupti delectus accusamus, laborum quisquam mollitia temporibus impedit perferendis fugiat alias ipsum distinctio obcaecati fuga! Atque odio dicta esse? Repudiandae incidunt voluptas illo distinctio nulla dicta, sit perferendis voluptate! Quidem rerum atque molestiae minus? Possimus eligendi nostrum explicabo laudantium consequatur, est </p>
         </div>
@@ -84,7 +90,7 @@ const Home = () => {
       <div className='container d-flex' style={{ marginTop: '1rem', justifyContent:'space-between' }}>
         
         {/* Left Scroll Button */}
-        <button
+        {/* <button
             className="btn btn"
             onClick={handleScrollLeft}
             disabled={startIndex === 0}  // Disable when at the first card
@@ -105,11 +111,11 @@ const Home = () => {
           <img className="card-img-top" src={item.src} alt="Card" style={{height:'100%',borderRadius:'2rem'}}/>
           <strong style={{position:'absolute',bottom:'10%',backgroundColor:'#e63946',color:'#f1faee',borderRadius:'8px',left:'30%'}}>{item.name}</strong>
           </div>
-        ))}
+        ))} */}
 
 
           {/* Right Scroll Buttons */}
-          <button
+          {/* <button
             className="btn btn"
             onClick={handleScrollRight}
             disabled={startIndex + 4 >= department.length}   // Disable when at the last card
@@ -123,9 +129,35 @@ const Home = () => {
             }}
           >
             &gt;
-          </button>
+          </button>  */}
       </div>
+      <Swiper
+        effect={'coverflow'}
+        grabCursor={true}
+        centeredSlides={true}
+        slidesPerView={'auto'}
+        coverflowEffect={{
+          rotate: 50,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows: true,
+        }}
+        pagination={true}
+        modules={[EffectCoverflow, Pagination]}
+        className="mySwiper"
+      >
+      {department.map((item, index) => (
+        <SwiperSlide key={index}>
+          <div className="card">
+            <img className="card-img-top" src={item.src} alt="Card" />
+            <strong style={{position:'absolute',bottom:'10%',backgroundColor:'#e63946',color:'#f1faee',borderRadius:'8px',left:'30%'}}>{item.name}</strong>
+          </div>
+        </SwiperSlide>
+      ))}
+    </Swiper>
       </div>
+      
       <Foter />
     </div>
   )

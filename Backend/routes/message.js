@@ -29,5 +29,36 @@ router.get('/fetch',async(req,res)=>{
     }
 })
 
+//Route 3:-Fetch specific user message:Get "api/message/specific-user".
+router.get('/specific-user',fetchuser,async(req,res)=>{
+    try {
+        const response = await Message.find({user:req.user.id});
+        res.json(response);
+    } catch (error) {
+        console.error(Error.message);
+        res.status(500).send("some Error occured")
+    }
+})
+
+//Route 4:-Update a message for adding a replay for a message
+router.patch('/message-update/:id',async(req,res)=>{
+    const {id} = req.params;
+    const {replay} = req.body;
+    try {
+        const response = await Message.findByIdAndUpdate(
+            id,
+            {replay},
+            {new:true}
+        );
+        if (!response) {
+            return res.status(404).json({ error: "User Not Found" });
+        }
+
+        res.status(200).json({ message: "User updated successfully", response });
+    } catch (error) {
+        console.error("Error updating user:", error);
+        res.status(500).json({ error: "Failed to update user" });
+    }
+})
 
 module.exports = router;

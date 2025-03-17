@@ -4,6 +4,7 @@ const router = express.Router();
 const { body,validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const fetchuser = require('../middleware/fetchuser')
 
 
 const JWT_SECRET = 'swayamisagoodb$oy';
@@ -35,7 +36,10 @@ router.post('/createuser',[
         user = await User.create({
             name:req.body.name,
             email:req.body.email,
-            password:secPass
+            password:secPass,
+            address:req.body.address,
+            DOB:req.body.dob,
+            gender:req.body.gender,
         });
 
         const data ={        //here data is a object is store user object and user id for jwt token.
@@ -93,5 +97,41 @@ router.post('/login',[
          res.status(500).send("Internal Server Error");
     }
 })
+
+
+// ROUTE 3: find a specific user data  using : GET  "/api/auth/fetch".login required
+router.get('/fetch',fetchuser,async(req,res)=>{
+    try {
+        const response = await User.findById(req.user.id).select("-password");
+    res.json(response);
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).send("Internal Server Error");
+    }
+})
+
+router.patch('/update/:id', async (req, res) => {
+    const { id } = req.params;
+    const { name, address, DOB, gender } = req.body;
+    
+    try {
+        const response = await User.findByIdAndUpdate(
+            id,
+            { name, address, DOB, gender },
+            { new: true }
+        );
+
+        if (!response) {
+            return res.status(404).json({ error: "User Not Found" });
+        }
+
+        res.status(200).json({ message: "User updated successfully", response });
+    } catch (error) {
+        console.error("Error updating user:", error);
+        res.status(500).json({ error: "Failed to update user" });
+    }
+});
+
+
 
 module.exports = router

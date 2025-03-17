@@ -19,6 +19,18 @@ const userSchema = new Schema({
         type:String,
         default:'user'
     },
+    address:{
+        type:String,
+        required:true
+    },
+    DOB:{
+        type:Date,
+        require:true
+    },
+    gender:{
+        type:String,
+        require:true
+    },
     date:{
         type: Date,
         default: Date.now

@@ -1,0 +1,18 @@
+/* Normal state */
+.nav-link {
+    color: rgb(178, 186, 187); /* Normal link color */
+  }
+  
+  /* Hover state */
+  .nav-link:hover {
+    color: black; /* Color when mouse hovers over the link */
+  }
+  
+  /* Active state (when clicked) */
+  .nav-link:active {
+    color: white; /* Color when the link is clicked */
+  }
+  
+  /* Visited state */
+  
+ 

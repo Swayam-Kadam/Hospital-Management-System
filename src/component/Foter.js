@@ -2,7 +2,7 @@ import React from 'react'
 
 const foter = () => {
     return (
-        <div>
+        <div style={{backgroundColor:'#1d3557',color:'white',borderTopLeftRadius:'1rem',borderTopRightRadius:'1rem'}}>
             <div className="container" style={{ marginTop: '5rem',height: '10rem' }}>
                 <hr />
                 <div className="container" style={{  marginTop: '2rem',justifyContent: 'space-between',display:'flex',height: '100%', width: '100%', overflow: 'hidden' }}>
@@ -50,7 +50,7 @@ const foter = () => {
                     </div>
                 </div>
             </div>
-            <div ><footer style={{backgroundColor:'#1d3557',marginTop:'2rem',color:'white'}}>&copy; All CopyRight Reserved By Apollo Medical Institute.</footer></div>
+            <div ><footer style={{backgroundColor:'#1d3557',marginTop:'2.5rem',color:'white'}}>&copy; All CopyRight Reserved By Apollo Medical Institute.</footer></div>
             
         </div>
     )

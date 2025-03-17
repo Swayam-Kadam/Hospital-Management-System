@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext }  from 'react';
 import { Link,useNavigate } from 'react-router-dom';
+import { ThemeContext } from './ThemeContext';
+import './css/navbar.css'
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
   const logout = (e) =>{
     if (localStorage.getItem('token')) {
@@ -14,6 +17,7 @@ const Navbar = () => {
       navigate('/login');
     }
   }
+
 
   return (
     <div>
@@ -30,19 +34,23 @@ const Navbar = () => {
   <div className="collapse navbar-collapse" id="navbarSupportedContent">
     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
       <li className="nav-item">
-        <Link className="nav-link active" aria-current="page" to="/">Home</Link>
+        <Link className="nav-link" aria-current="page" to="/" >Home</Link>
       </li>
       <li className="nav-item">
-        <Link className="nav-link active" to="/Appointment">Appointment</Link>
+        <Link className="nav-link" to="/Appointment">Appointment</Link>
       </li>     
       <li className="nav-item">
-        <Link className="nav-link active" to="/detail">Docter-Detail</Link>
+        <Link className="nav-link" to="/detail">Docter-Detail</Link>
       </li>
       <li className="nav-item">
-        <Link className="nav-link active" to="/profile">My-Profile</Link>
+        <Link className="nav-link" to="/profile">My-Profile</Link>
+      </li>
+      <li className="nav-item">
+        <Link className="nav-link" to="/exam">Exam</Link>
       </li>
     </ul>
     <div>
+    <button className='btn btn-outline-secondary mx-3' onClick={toggleTheme}>{theme === "dark"?<i className="fa-solid fa-sun"></i>:<i className="fa-solid fa-moon w-19" ></i>}</button>
     <button className= {`btn ${localStorage.getItem('token') ? 'btn-danger' : 'btn-primary'}`}  onClick={logout}>{localStorage.getItem('token') ? 'LogOut' : 'LogIn'}</button>
       </div>
   </div>

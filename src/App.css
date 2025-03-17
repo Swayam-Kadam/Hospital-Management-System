@@ -41,3 +41,14 @@ body{
 background-color: #a8dadc;
 font-family: cursive;
 }
+body #card{
+   background-color: #f1faee
+}
+
+body.dark {
+  background-color: #1A1A1D;
+}
+body.dark #card{
+  background-color: #2D2D30;
+  color: #EAEAEA;
+}

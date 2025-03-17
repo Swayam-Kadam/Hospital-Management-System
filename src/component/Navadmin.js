@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link,useNavigate} from 'react-router-dom';
+import './css/navbar.css'
 
 const Navadmin = () => {
 
@@ -24,13 +25,16 @@ const Navadmin = () => {
   <div className="collapse navbar-collapse" id="navbarSupportedContent">
     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
       <li className="nav-item">
-        <Link className="nav-link active" aria-current="page" to="/Admin">Admin</Link>
+        <Link className="nav-link" aria-current="page" to="/Admin">Admin</Link>
       </li>
       <li className="nav-item">
-        <Link className="nav-link active" to="/Admin/Adddoc">Add-Doctor</Link>
+        <Link className="nav-link" aria-current="page" to="/Admin/analysis">Analysis</Link>
       </li>
       <li className="nav-item">
-        <Link className="nav-link active" to="/Admin/Message">Messages</Link>
+        <Link className="nav-link" to="/Admin/Adddoc">Add-Doctor</Link>
+      </li>
+      <li className="nav-item">
+        <Link className="nav-link" to="/Admin/Message">Messages</Link>
       </li>
     </ul>
     <div>

@@ -38,7 +38,7 @@ const Login = () => {
           toast.success ("Admin Login Successfull")
           navigate("/admin/");
         }else{
-          toast.success("Admin Login Successfull")
+          toast.success("User Login Successfull")
           navigate("/");
         }
       }
@@ -52,7 +52,7 @@ const Login = () => {
   return (
     <div>
       <ToastContainer  position="top-center"  autoClose={3000}   hideProgressBar={false}  newestOnTop={true}  closeOnClick  pauseOnFocusLoss  draggable  pauseOnHover/>
-      <div className="container" style={{margin:'0 auto',width: '50%',marginTop:'8rem'}}>
+      <div className="container bg-light" style={{margin:'0 auto',width: '50%',marginTop:'8rem'}}>
         <img src='/logo.svg' alt='hospital logo'/>
        <h1 className='my-4'>Welcome To Apollo</h1>
        <form onSubmit={handleSubmit}>
@@ -60,7 +60,7 @@ const Login = () => {
           
             <input type="email" placeholder='Email' className='form-control' name='email' value={formData.email} onChange={handleChange}/>
             <input type="password" placeholder='Password' className='form-control my-4' name='password' value={formData.password} onChange={handleChange}/>
-            <button className='btn btn-success'>Login</button>
+            <button className='btn btn-success my-3'>Login</button>
             <Link className="mx-4" to={"/signup"}>Register a New User</Link>
             <Link  to={"/"}>Back</Link>
           

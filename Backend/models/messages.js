@@ -17,6 +17,9 @@ const MessegeSchema = Schema({
     tag:{
         type:String,
         require:true
+    },
+    replay:{
+        type:String,
     }
 });
 
